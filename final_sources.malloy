@@ -6,21 +6,30 @@ source: trailbalance is duckdb.table('./trailbalance.csv') extend {
 source: je is duckdb.table("je.csv") extend {
     join_one: trailbalance with GLAccountNumber
     dimension:
-        credit is replace(replace(`Credit`, ",", ''),"-","") 
-        debit is replace(replace(`Debit`, ",", ''),"-","")
-        
-        # Replace '.' with '0' to avoid errors and convert to number
-        clean_credit is case when credit = '.' then '0' else credit end
+        credit is replace(replace(`Credit`, ",", ''),"-","-0")
+        debit is replace(replace(`Debit`, ",", ''),"-","-0")
+        amount_clean is replace(replace(`Amount`, ",", ''),"-","-0")
+       
+       clean_credit is case when credit = '.' then '0' else credit end
         clean_debit is case when debit = '.' then '0' else debit end
+        clean_amount is case when amount_clean = '.' then '0' else amount_clean end
         
-        numcredit is clean_credit :: number
-        numdebit is clean_debit :: number
+       numcredit is clean_credit :: number
+       numdebit is clean_debit :: number
+        amount is clean_amount :: number
+
     measure: 
         total_count is count()
-        total_credit_entries is count() {where: numcredit is not null}
-        total_debit_entries is count() {where: numdebit is not null}
+        total_credit_entries is count() {where: credit is not null}
+        total_debit_entries is count() {where: debit is not null}
         sum_credit is numcredit.sum()
         sum_debit is numdebit.sum()
+        amount_sum is amount.sum()
         total_accounttype is count(trailbalance.AccountType)
+        balancing is (sum_credit + sum_debit)
+        debit_cash is numdebit.sum() {where: AccountClass = "Cash"}
+        credit_cash is numcredit.sum() {where: AccountClass = "Cash"}
+        balancing_cash is (debit_cash + credit_cash)
+
 }
     
