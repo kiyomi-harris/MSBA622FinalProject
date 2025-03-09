@@ -1,0 +1,51 @@
+>>>malloy
+import 'final_sources.malloy'
+>>>malloy
+run: je -> {
+    aggregate: total_count
+    aggregate: total_credit_entries
+    aggregate: total_debit_entries
+    aggregate: total_accounttype
+    aggregate: total_accountclass is count(AccountClass)
+}
+>>>malloy
+run: je -> {
+    
+    aggregate: sum_credit
+    aggregate: sum_debit
+    aggregate: balancing
+    aggregate: amount_sum
+}
+>>>malloy
+run: je -> {
+    group_by: trailbalance.AccountType
+    aggregate: sum_credit
+    aggregate: sum_debit
+    aggregate: balancing
+}
+>>>malloy
+run: je -> {
+    group_by: PreparerID
+    aggregate: amount_sum
+   -- # bar_chart 
+    nest: accounts_debit is {
+        group_by: AccountClass
+        aggregate: sum_debit
+    }
+     --# bar_chart 
+    nest: accounts_credit is{
+        group_by: AccountClass
+        aggregate: sum_credit
+    }
+    nest: accounts_balance is {
+        group_by: AccountClass
+        aggregate: balancing
+    }
+}
+>>>malloy
+run: je -> {
+    group_by: PreparerID
+    aggregate: debit_cash
+    aggregate: credit_cash
+    aggregate: balancing_cash
+}
