@@ -1,0 +1,26 @@
+source: trailbalance is duckdb.table('./trailbalance.csv') extend {
+    primary_key: GLAccountNumber
+}
+
+
+source: je is duckdb.table("je.csv") extend {
+    join_one: trailbalance with GLAccountNumber
+    dimension:
+        credit is replace(replace(`Credit`, ",", ''),"-","") 
+        debit is replace(replace(`Debit`, ",", ''),"-","")
+        
+        # Replace '.' with '0' to avoid errors and convert to number
+        clean_credit is case when credit = '.' then '0' else credit end
+        clean_debit is case when debit = '.' then '0' else debit end
+        
+        numcredit is clean_credit :: number
+        numdebit is clean_debit :: number
+    measure: 
+        total_count is count()
+        total_credit_entries is count() {where: numcredit is not null}
+        total_debit_entries is count() {where: numdebit is not null}
+        sum_credit is numcredit.sum()
+        sum_debit is numdebit.sum()
+        total_accounttype is count(trailbalance.AccountType)
+}
+    
