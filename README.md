@@ -38,6 +38,11 @@ Victoria Simpson (Accounting Manager) has a broader distribution of transactions
 
 ![preparerentries](images/vis3.png)
 
+## Parts of the Hotel
+The bar charts visualizes the financial data of the hotel’s general ledger for 2015 and 2016, displaying assets, liabilities, revenue, and expenses by hotel area. Each financial category is nested within the respective year, allowing for a clear comparison of amounts across different departments. This breakdown highlights trends and potential discrepancies in financial performance.
+
+![busunit](images/vis4.png)
+
 ## Background and Motivation
 
 Financial fraud can be difficult to detect, but data analytics offers a powerful way to uncover hidden anomalies. By leveraging tools like Malloy, this analysis provides insights into PSU Hotel’s financial health, highlighting unusual transactions and discrepancies that could indicate fraudulent activity. This report is valuable for auditors, financial analysts, and anyone interested in forensic accounting and fraud detection.
