@@ -1,7 +1,7 @@
 # MSBA622FinalProject
 ## Overview
 
-This project analyzes the financial records of the fake PSU Hotel to detect potential fraud using Malloy. The dataset includes journal entries from 2014 to 2016 and a 2016 trial balance. The goal is to identify discrepancies, unusual transactions, and patterns indicative of fraudulent activity.
+This project analyzes the financial records of the fake PSU Hotel to detect potential fraud using Malloy. The dataset includes journal entries from 2014 to 2016 and a 2016 trial balance. PSU Hotel's fiscal years are from July to June, so journal entries from 2014 are for the fiscal year 2015. There are only two fiscal years worth of transactions. The goal is to identify discrepancies, unusual transactions, and patterns indicative of fraudulent activity.
 
 ## Data Sources
 
@@ -12,9 +12,9 @@ trailbalance.csv: Contains the 2016 trial balance with account balances.
 Analytics_mindset_case_studies_PSU_Hotel_background.pdf: Background on PSU Hotel’s operations and financial context.
 
 ## Summary of Findings
-
-What did we find? Well let me tell you! With **images**! Include at least 5 screenshots of visualizations!
-
+### Transaction Summary
+This chart showcases the different type and classes of accounts that PSU Hotel had transactions in. It shows that from 2015 to 2016 there was a large decrease in cash and a large increase in PPE. You can also see that the rest of the accounts stayed fairly similar from the two fiscal years, however the decrease in cash shows up in the fact that PSU Hotel has $1 million less in assets and their liabilites went from negative to positive.
+![TransactionSummary](images/vis1.png)
 ## Background and Motivation
 
 Financial fraud can be difficult to detect, but data analytics offers a powerful way to uncover hidden anomalies. By leveraging tools like Malloy, this analysis provides insights into PSU Hotel’s financial health, highlighting unusual transactions and discrepancies that could indicate fraudulent activity. This report is valuable for auditors, financial analysts, and anyone interested in forensic accounting and fraud detection.
