@@ -110,3 +110,21 @@ run: je -> {
         }
         
     }
+>>>markdown
+## Parts of the Hotel
+The bar charts visualizes the financial data of the hotel’s general ledger for 2015 and 2016, displaying assets, liabilities, revenue, and expenses by hotel area. Each financial category is nested within the respective year, allowing for a clear comparison of amounts across different departments. This breakdown highlights trends and potential discrepancies in financial performance.
+>>>malloy
+run: je -> {
+    group_by: fiscal_year
+    nest: by_type is {
+    group_by: AccountType
+# bar_chart
+    nest: by_busn_unit is {
+
+    group_by: businessunit
+  
+    aggregate: sum_debit
+
+}
+    }
+}

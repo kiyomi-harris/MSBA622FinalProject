@@ -9,6 +9,7 @@ source: trialbalance is duckdb.table('./trialbalance.csv') extend {
 source: je is duckdb.table("je.csv") extend {
     join_one: trialbalance with GLAccountNumber
     dimension:
+        businessunit is upper(BusinessUnit)
         credit is replace(replace(`Credit`, ",", ''),"-","-0")
         debit is replace(replace(`Debit`, ",", ''),"-","-0")
         amount_clean is replace(replace(`Amount`, ",", ''),"-","-0")
