@@ -30,6 +30,14 @@ Liabilities: Exhibit minimal fluctuations, suggesting steady financial obligatio
 ![EntryTrend](images/vis2.png)
 
 
+## Who Prepares the entries?
+This visualization provides an overview of transaction patterns by PreparerID, categorizing credits and debits across different account classes. While only a few preparers are visible, the full dataset includes more individuals handling financial transactions.
+
+POS & GUESTSYS appear to be responsible for high-volume sales transactions, with large credits in "Sales - Other" and corresponding debits in "Cash."
+Victoria Simpson (Accounting Manager) has a broader distribution of transactions, with debits spread across payroll, accounts payable, and other expenses, indicating involvement in financial operations beyond sales.
+
+![preparerentries](images/vis3.png)
+
 ## Background and Motivation
 
 Financial fraud can be difficult to detect, but data analytics offers a powerful way to uncover hidden anomalies. By leveraging tools like Malloy, this analysis provides insights into PSU Hotel’s financial health, highlighting unusual transactions and discrepancies that could indicate fraudulent activity. This report is valuable for auditors, financial analysts, and anyone interested in forensic accounting and fraud detection.
