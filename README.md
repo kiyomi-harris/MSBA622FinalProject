@@ -12,9 +12,18 @@ trailbalance.csv: Contains the 2016 trial balance with account balances.
 Analytics_mindset_case_studies_PSU_Hotel_background.pdf: Background on PSU Hotel’s operations and financial context.
 
 ## Summary of Findings
+
 ### Transaction Summary
+
 This chart showcases the different type and classes of accounts that PSU Hotel had transactions in. It shows that from 2015 to 2016 there was a large decrease in cash and a large increase in PPE. You can also see that the rest of the accounts stayed fairly similar from the two fiscal years, however the decrease in cash shows up in the fact that PSU Hotel has $1 million less in assets and their liabilites went from negative to positive.
+
 ![TransactionSummary](images/vis1.png)
+
+### Transaction Entry Trend
+
+The charts below show the monthly trend in account based on the account type and split between debit and credits. Some account types had very little movement wheras others like assets had lots of volitility. 
+
+![EntryTrend](images/vis2.png)
 ## Background and Motivation
 
 Financial fraud can be difficult to detect, but data analytics offers a powerful way to uncover hidden anomalies. By leveraging tools like Malloy, this analysis provides insights into PSU Hotel’s financial health, highlighting unusual transactions and discrepancies that could indicate fraudulent activity. This report is valuable for auditors, financial analysts, and anyone interested in forensic accounting and fraud detection.
