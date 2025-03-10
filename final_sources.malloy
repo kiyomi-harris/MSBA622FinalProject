@@ -1,10 +1,13 @@
-source: trailbalance is duckdb.table('./trailbalance.csv') extend {
+source: trialbalance is duckdb.table('./trialbalance.csv') extend {
     primary_key: GLAccountNumber
+    measure: starting_bal is GLAccountStartingBalance.sum()
+    measure: ending_bal is GLAccountEndingBalance.sum()
+    measure: tot_count is count()
 }
 
 
 source: je is duckdb.table("je.csv") extend {
-    join_one: trailbalance with GLAccountNumber
+    join_one: trialbalance with GLAccountNumber
     dimension:
         credit is replace(replace(`Credit`, ",", ''),"-","-0")
         debit is replace(replace(`Debit`, ",", ''),"-","-0")
@@ -18,6 +21,11 @@ source: je is duckdb.table("je.csv") extend {
        numdebit is clean_debit :: number
         amount is clean_amount :: number
 
+        fiscal_year is split_part!(Period, "-",1)
+        fiscal_month is split_part!(Period, "-",2)
+
+
+
     measure: 
         total_count is count()
         total_credit_entries is count() {where: credit is not null}
@@ -25,11 +33,15 @@ source: je is duckdb.table("je.csv") extend {
         sum_credit is numcredit.sum()
         sum_debit is numdebit.sum()
         amount_sum is amount.sum()
-        total_accounttype is count(trailbalance.AccountType)
-        balancing is (sum_credit + sum_debit)
+        total_accounttype is count(trialbalance.AccountType)
         debit_cash is numdebit.sum() {where: AccountClass = "Cash"}
         credit_cash is numcredit.sum() {where: AccountClass = "Cash"}
         balancing_cash is (debit_cash + credit_cash)
-
+        end_bal_check is amount_sum + start_bal
+        end_bal is trialbalance.GLAccountEndingBalance.sum()
+        start_bal is trialbalance.GLAccountStartingBalance.sum()
+        start_end_bal_diff is end_bal - start_bal
+        unique_entry is count(JEIdentifier)
+        
 }
     
