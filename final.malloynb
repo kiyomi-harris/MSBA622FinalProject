@@ -1,0 +1,112 @@
+>>>malloy
+import 'final_sources.malloy'
+>>>markdown
+## Exploring the Data
+Shows how many transactions occured each year in the general ledger, plus the different kinds of accounts in the data.
+>>>malloy
+run: je -> {
+    group_by: fiscal_year
+    aggregate: total_count
+    aggregate: total_credit_entries
+    aggregate: total_debit_entries
+    aggregate: total_accounttype
+    aggregate: total_accountclass is count(AccountClass)
+}
+>>>markdown
+## Account Balancing
+This shows the 2016 totals for the debit and credits in the general ledger. The amount_sum aggregate is the sum of the amount column, where debits and credits are not separated. The amount sum is zero, meaning the general ledger balanced in terms of credits and debits.
+>>>malloy
+run: je -> {
+    
+    aggregate: sum_credit
+    aggregate: sum_debit
+    aggregate: amount_sum
+    where: fiscal_year = "2016"
+}
+>>>markdown
+## Trial Balance
+As seen below, the starting balance and ending balances don't actually balance, within a trial balance it is expected where assets = liabilites + equity. However, when everything is added up, the numbers don't balance. There are many reasons why a trial balance doesn't balance, either due to human error, misaligned journal entries, or some form of fraud.
+>>>malloy
+run: trialbalance -> {
+    group_by: AccountType
+ aggregate: starting_bal
+ aggregate: ending_bal
+}
+>>>markdown
+## Transaction Difference
+
+To find out if the ending balance was accurate with the amounts of transactions that happened during the fiscal year there is both a starting and ending balance difference and the amount of transactions in the fiscal year. It was grouped by type to see which accounts had differences. Both assets and liabilites were the same, however, there were about 2 million dollars worth of extra expenses not reported on the balance sheet and about 2 million less of revenues not reported on the balance sheet. This creates where just aggregating everything should show a balanced number, however after breaking it down it clearly shows where the accounts have been under and over reported. 
+>>>malloy
+run: je -> {
+    group_by: AccountType
+    aggregate: start_end_bal_diff
+    aggregate: amount_sum
+    where: fiscal_year = "2016"
+}
+>>>markdown
+## Transaction Summary
+This chart showcases the different type and classes of accounts that PSU Hotel had transactions in. It shows that from 2015 to 2016 there was a large decrease in cash and a large increase in PPE. You can also see that the rest of the accounts stayed fairly similar from the two fiscal years, however the decrease in cash shows up in the fact that PSU Hotel has $1 million less in assets and their liabilites went from negative to positive.
+>>>malloy
+run: je -> {
+  group_by: fiscal_year
+  nest: transactions is {
+    group_by: AccountType
+    aggregate: amount_sum
+  }
+    # bar_chart 
+  nest: class_transactions is {
+    group_by: AccountClass
+    aggregate: amount_sum
+  }
+  
+  
+}
+>>>markdown
+## Transaction Entry Trend
+This analysis visualizes credit and debit trends over time for different account types—Assets, Expenses, Liabilities, and Revenue—based on a general ledger dataset. The line charts display fluctuations in credits (left side) and debits (right side) from mid-2014 to mid-2016.
+
+Assets & Revenue: Show significant negative credit values, suggesting outflows, while debits indicate ongoing inflows.
+Expenses: Have relatively stable credit values, with a gradual increase in debits, implying rising costs.
+Liabilities: Exhibit minimal fluctuations, suggesting steady financial obligations.
+>>>malloy
+
+run: je -> {
+    group_by: AccountType
+    # line_chart
+    nest: credits is {
+    group_by: EntryDate.month
+    aggregate: sum_credit
+    }
+    # line_chart
+    nest: debits is {
+        group_by: EntryDate.month
+        aggregate: sum_debit
+    }
+}
+>>>markdown
+## Who is entering the transactions?
+This visualization provides an overview of transaction patterns by PreparerID, categorizing credits and debits across different account classes.
+
+POS & GUESTSYS appear to be responsible for high-volume sales transactions, with large credits in "Sales - Other" and corresponding debits in "Cash."
+Victoria Simpson (Accounting Manager) has a broader distribution of transactions, with debits spread across payroll, accounts payable, and other expenses, indicating involvement in financial operations beyond sales.
+>>>malloy
+# dashboard
+run: je -> {
+    group_by: PreparerID
+    aggregate: total_count
+        # bar_chart {y.independent}
+        nest: by_class_credit is {
+            group_by: AccountClass
+            aggregate: sum_credit
+            # tooltip
+            aggregate: unique_entry
+        }
+        # bar_chart {y.independent}
+        nest: by_class_debit is {
+            group_by: AccountClass
+            aggregate: sum_debit
+             # tooltip
+            aggregate: unique_entry
+        }
+        
+    }
