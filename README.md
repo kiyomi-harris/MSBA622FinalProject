@@ -47,7 +47,7 @@ Financial fraud can be difficult to detect, but data analytics offers a powerful
 This repository contains two Malloy code files:
 
 - [`final_sources.malloy`](final_sources.malloy), sources all the data tables for the data analysis portion of this repository.
-- [`final2.malloynb`](final2.malloynb), performs the analysis piece of the data provided by the Data Liberation Project.
+- [`final2.malloynb`](final.malloynb), performs the analysis piece of the data provided by the Data Liberation Project.
 
 ## Why Malloy?
 [Malloy](https://malloydata.dev) is an open source semantic data language, and a compelling alternative to pandas, ggplot, and SQL!
