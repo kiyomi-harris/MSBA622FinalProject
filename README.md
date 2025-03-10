@@ -21,9 +21,15 @@ This chart showcases the different type and classes of accounts that PSU Hotel h
 
 ### Transaction Entry Trend
 
-The charts below show the monthly trend in account based on the account type and split between debit and credits. Some account types had very little movement wheras others like assets had lots of volitility. 
+This analysis visualizes credit and debit trends over time for different account types—Assets, Expenses, Liabilities, and Revenue—based on a general ledger dataset. The line charts display fluctuations in credits (left side) and debits (right side) from mid-2014 to mid-2016.
+
+Assets & Revenue: Show significant negative credit values, suggesting outflows, while debits indicate ongoing inflows.
+Expenses: Have relatively stable credit values, with a gradual increase in debits, implying rising costs.
+Liabilities: Exhibit minimal fluctuations, suggesting steady financial obligations.
 
 ![EntryTrend](images/vis2.png)
+
+
 ## Background and Motivation
 
 Financial fraud can be difficult to detect, but data analytics offers a powerful way to uncover hidden anomalies. By leveraging tools like Malloy, this analysis provides insights into PSU Hotel’s financial health, highlighting unusual transactions and discrepancies that could indicate fraudulent activity. This report is valuable for auditors, financial analysts, and anyone interested in forensic accounting and fraud detection.
